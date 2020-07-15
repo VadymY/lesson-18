@@ -14,38 +14,29 @@
 
 // Решение
 class Customers {
+
     constructor() {
-        this.name = [];
-        this.virified = [];
-    }
+        this.items = [];
+        }
 
     add({name, verified}) {
-        this.name.push(name);
-        this.virified.push(verified);
+        this.items.push({name, verified});
     }
 
     [Symbol.iterator]() {
+        const filteredArray = this.items.filter((item) =>  item.verified === true);
         let i = 0;
-        let self = this;
-
         return {
-            next() {
-                while (true) {
-                    if (self.virified[i]) {
-                        const value = i >= self.name.length ? undefined : self.name[i++];
-                        const done = value != undefined ? false : true;
-                        return { value, done }
-                    } else {
-                        i++;
-                        if (i >= self.name.length) {
-                            return { value: undefined, done: true}
-                        }
-                    }
-                }
-            }
+            next: () => {
+                const done = i >= filteredArray.length;
+                const value = !done ? filteredArray[i++] : undefined;
+
+                return { value,  done };
+            },
         }
     }
 }
+
 // Пример использования:
 const customers = new Customers();
 customers.add({name: 'Alex'});

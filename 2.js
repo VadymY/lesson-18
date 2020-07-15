@@ -12,19 +12,17 @@
 
 class Customers {
     constructor() {
-        this.name = [];
-        this.virified = [];
+        this.items = [];
     }
 
     add({name, verified}) {
-        this.name.push(name);
-        this.virified.push(verified);
+        this.items.push({name, verified});
     }
 
     *[Symbol.iterator]() {
-        for(let index = 0; index < this.name.length; index++) {
-            if (this.virified[index]){
-                yield this.name[index];
+        for(let index = 0; index < this.items.length; index++) {
+            if (this.items[index].verified){
+                yield this.items[index];
             }
         }
     }
